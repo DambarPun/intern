@@ -1,0 +1,4 @@
+<resources>
+    <string name="app_name">PullNewsAPI</string>
+    <string name="action_favorite">Favorite</string>
+</resources>
