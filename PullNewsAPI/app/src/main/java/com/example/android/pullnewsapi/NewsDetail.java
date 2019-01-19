@@ -58,7 +58,7 @@ public class NewsDetail extends AppCompatActivity {
         Log.d(TAG, "onCreate: imgLink"+imgLink);
         Log.d(TAG, "onCreate: office"+office);
         Log.d(TAG, "onCreate: publishedBy"+publishedBy);
-        
+
        // mTvBlogTitle.setText(blogTitle);
         mTvBlog.setText(blog);
         mDate.setText(date);
