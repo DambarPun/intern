@@ -4,8 +4,8 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".BasicActivity"
-    android:background="@drawable/bg">
+    android:background="@drawable/bg"
+    tools:context=".BasicActivity">
 
     <android.support.v7.widget.AppCompatTextView
         android:layout_width="match_parent"
@@ -29,6 +29,7 @@
         android:layout_marginTop="8dp"
         android:layout_marginEnd="24dp"
         android:layout_marginBottom="8dp"
+        app:errorEnabled="true"
         app:layout_constraintBottom_toTopOf="@+id/guideline6"
         app:layout_constraintEnd_toStartOf="@+id/guideline2"
         app:layout_constraintStart_toStartOf="@+id/guideline"
@@ -39,6 +40,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:hint="Name"
+
             android:inputType="textPersonName" />
     </android.support.design.widget.TextInputLayout>
 
@@ -134,6 +136,7 @@
         android:layout_marginTop="8dp"
         android:layout_marginEnd="24dp"
         android:layout_marginBottom="8dp"
+        app:errorEnabled="true"
         app:layout_constraintBottom_toTopOf="@+id/guideline7"
         app:layout_constraintEnd_toStartOf="@+id/guideline2"
         app:layout_constraintStart_toStartOf="@+id/guideline"
@@ -144,6 +147,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:hint="Address"
+
             android:inputType="textPostalAddress" />
     </android.support.design.widget.TextInputLayout>
 
@@ -155,6 +159,7 @@
         android:layout_marginTop="8dp"
         android:layout_marginEnd="24dp"
         android:layout_marginBottom="8dp"
+        app:errorEnabled="true"
         app:layout_constraintBottom_toTopOf="@+id/guideline8"
         app:layout_constraintEnd_toStartOf="@+id/guideline2"
         app:layout_constraintStart_toStartOf="@+id/guideline"
@@ -164,6 +169,7 @@
             android:id="@+id/textInputOccupation"
             android:layout_width="match_parent"
             android:layout_height="40dp"
+
             android:hint="Occupation"
             android:inputType="text" />
     </android.support.design.widget.TextInputLayout>

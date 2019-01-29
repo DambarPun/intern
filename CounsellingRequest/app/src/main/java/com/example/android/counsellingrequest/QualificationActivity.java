@@ -157,4 +157,8 @@ public class QualificationActivity extends AppCompatActivity {
     public void goToPreviousActivity(View view) {
         super.onBackPressed();
     }
+
+    public void openCountryActivity(View view) {
+        startActivity(new Intent(this, CountryActivity.class));
+    }
 }

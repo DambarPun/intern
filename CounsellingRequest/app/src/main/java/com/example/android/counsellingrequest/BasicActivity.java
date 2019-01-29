@@ -6,7 +6,6 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
-import android.widget.Toast;
 
 public class BasicActivity extends AppCompatActivity {
     private TextInputLayout mTextInputLayoutAddress;
@@ -24,11 +23,6 @@ public class BasicActivity extends AppCompatActivity {
         mTextInputLayoutAddress = (TextInputLayout) findViewById(R.id.textInputLayoutAddress);
         mTextInputLayoutOccupation = (TextInputLayout) findViewById(R.id.textInputLayoutOccupation);
 
-        if (savedInstanceState != null) {
-            mTextInputLayoutName.getEditText().setText(savedInstanceState.getString("name"));
-            mTextInputLayoutAddress.getEditText().setText(savedInstanceState.getString("address"));
-            mTextInputLayoutOccupation.getEditText().setText(savedInstanceState.getString("occupation"));
-        }
     }
 
     private boolean isNameValid() {
@@ -100,6 +94,7 @@ public class BasicActivity extends AppCompatActivity {
 
     @Override
     protected void onSaveInstanceState(Bundle outState) {
+        Log.d(TAG, "onSaveInstanceState: ");
         super.onSaveInstanceState(outState);
         String name = mTextInputLayoutName.getEditText().getText().toString();
         String address = mTextInputLayoutAddress.getEditText().getText().toString();
@@ -107,5 +102,17 @@ public class BasicActivity extends AppCompatActivity {
         outState.putString("name",name);
         outState.putString("name",address);
         outState.putString("name",occupation);
+    }
+
+    @Override
+    protected void onPostResume() {
+        super.onPostResume();
+        Log.d(TAG, "onPostResume: ");
+        Bundle bundle = getIntent().getExtras();
+        if (bundle != null) {
+            mTextInputLayoutName.getEditText().setText(bundle.getString("name"));
+            mTextInputLayoutAddress.getEditText().setText(bundle.getString("address"));
+            mTextInputLayoutOccupation.getEditText().setText(bundle.getString("occupation"));
+        }
     }
 }

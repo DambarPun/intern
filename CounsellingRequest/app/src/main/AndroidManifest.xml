@@ -12,12 +12,22 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme"
         android:usesCleartextTraffic="true">
-        <activity android:name=".CountryActivity"></activity>
-        <activity android:name=".QualificationActivity" />
-        <activity android:name=".SpecialRequestActivity" />
+        <activity android:name=".CountryActivity"
+            android:theme="@style/AppTheme.NoActionBar"></activity>
+        <activity android:name=".QualificationActivity"
+            android:theme="@style/AppTheme.NoActionBar"/>
+        <activity android:name=".SpecialRequestActivity"
+            android:theme="@style/AppTheme.NoActionBar"/>
         <activity
             android:name=".ContactActivity"
-            android:theme="@style/AppTheme.NoActionBar" />
+            android:theme="@style/AppTheme.NoActionBar">
+            <intent-filter>
+                <action android:name="android.intent.action.SEARCH" />
+            </intent-filter>
+            <meta-data
+                android:name="android.app.searchable"
+                android:resource="@xml/searchable" />
+        </activity>
         <activity
             android:name=".BasicActivity"
             android:theme="@style/AppTheme.NoActionBar">

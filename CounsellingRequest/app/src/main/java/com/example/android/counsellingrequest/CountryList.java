@@ -37,11 +37,24 @@ public class CountryList {
         private String code;
         private String name;
 
+        public String getIso() {
+            return iso;
+        }
+
+        public String getCode() {
+            return code;
+        }
+
+        public String getName() {
+            return name;
+        }
+
         Country(String iso, String code, String name) {
             this.iso = iso;
             this.code = code;
             this.name = name;
         }
+
 
         public String toString() {
             return iso + " - " + code + " - " + name.toUpperCase();

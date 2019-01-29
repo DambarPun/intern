@@ -28,9 +28,9 @@ public class ContactActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_contact);
 
-        mTextInputLayoutEmail =  findViewById(R.id.textInputLayoutEmail);
-        mTextInputLayoutTel =  findViewById(R.id.textInputLayoutTel);
-        mTextInputLayoutMobile =  findViewById(R.id.textInputLayoutMobile);
+        mTextInputLayoutEmail = findViewById(R.id.textInputLayoutEmail);
+        mTextInputLayoutTel = findViewById(R.id.textInputLayoutTel);
+        mTextInputLayoutMobile = findViewById(R.id.textInputLayoutMobile);
 
         Bundle bundle = getIntent().getExtras();
         if (bundle != null) {
@@ -124,5 +124,43 @@ public class ContactActivity extends AppCompatActivity {
 
     public void goToPreviousActivity(View view) {
         super.onBackPressed();
+    }
+
+    @Override
+    protected void onSaveInstanceState(Bundle outState) {
+        super.onSaveInstanceState(outState);
+        Log.d(TAG, "onSaveInstanceState: ");
+        String email = mTextInputLayoutEmail.getEditText().getText().toString();
+        String tel = mTextInputLayoutTel.getEditText().getText().toString();
+        String mobile = mTextInputLayoutMobile.getEditText().getText().toString();
+        outState.putString("email", email);
+        outState.putString("tel", tel);
+        outState.putString("mobile", mobile);
+
+        Log.d(TAG, "onPostResume: Email: "+email);
+        Log.d(TAG, "onPostResume: Tel: "+tel);
+        Log.d(TAG, "onPostResume: Mobile: "+mobile);
+
+    }
+
+    @Override
+    protected void onPostResume() {
+        super.onPostResume();
+        Log.d(TAG, "onPostResume: ");
+        Bundle bundle = getIntent().getExtras();
+        if (bundle != null) {
+
+            String email = bundle.getString("email");
+            String tel = bundle.getString("tel");
+            String mobile = bundle.getString("mobile");
+
+            Log.d(TAG, "onPostResume: Bundle not empty");
+            Log.d(TAG, "onPostResume: Email: "+email);
+            Log.d(TAG, "onPostResume: Tel: "+tel);
+            Log.d(TAG, "onPostResume: Mobile: "+mobile);
+            mTextInputLayoutEmail.getEditText().setText(bundle.getString("email"));
+            mTextInputLayoutTel.getEditText().setText(bundle.getString("tel"));
+            mTextInputLayoutMobile.getEditText().setText(bundle.getString("mobile"));
+        }
     }
 }
