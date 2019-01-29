@@ -2,6 +2,7 @@
 <ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/mainScrollView"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:layout_margin="16dp"
@@ -12,7 +13,7 @@
         android:layout_height="wrap_content">
 
         <android.support.design.widget.TextInputLayout
-            android:id="@+id/textInputLayout"
+            android:id="@+id/textInputLayoutName"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginStart="8dp"
@@ -23,6 +24,7 @@
             app:layout_constraintTop_toTopOf="parent">
 
             <android.support.design.widget.TextInputEditText
+                android:id="@+id/textInputName"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:hint="Name"
@@ -36,7 +38,7 @@
             android:layout_marginStart="8dp"
             android:text="Date of birth"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/textInputLayout2" />
+            app:layout_constraintTop_toBottomOf="@+id/textInputLayoutAddress" />
 
         <TextView
             android:id="@+id/tv_date"
@@ -48,10 +50,10 @@
             android:text="Date"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toEndOf="@+id/textView"
-            app:layout_constraintTop_toBottomOf="@+id/textInputLayout2" />
+            app:layout_constraintTop_toBottomOf="@+id/textInputLayoutAddress" />
 
         <android.support.design.widget.TextInputLayout
-            android:id="@+id/textInputLayout2"
+            android:id="@+id/textInputLayoutAddress"
             android:layout_width="match_parent"
             android:layout_height="59dp"
             android:layout_marginStart="8dp"
@@ -59,9 +61,10 @@
             android:layout_marginEnd="8dp"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/textInputLayout">
+            app:layout_constraintTop_toBottomOf="@+id/textInputLayoutName">
 
             <android.support.design.widget.TextInputEditText
+                android:id="@+id/textInputAddress"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:hint="Address"
@@ -79,6 +82,7 @@
             app:layout_constraintTop_toBottomOf="@+id/textView" />
 
         <Spinner
+            android:id="@+id/spinner_qualification"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginStart="8dp"
@@ -92,7 +96,7 @@
         <TextView
             android:id="@+id/textView3"
             android:layout_width="match_parent"
-            android:layout_height="20dp"
+            android:layout_height="24dp"
             android:layout_marginStart="8dp"
             android:layout_marginEnd="8dp"
             android:gravity="center"
@@ -114,60 +118,107 @@
             app:layout_constraintTop_toBottomOf="@+id/textView3">
 
             <CheckBox
+                android:id="@+id/cb_ielts"
                 android:layout_row="0"
                 android:layout_column="0"
                 android:layout_columnWeight="1"
-                android:text="IELTS" />
+                android:text="IELTS"
+                android:onClick="onCourseChecked"/>
 
             <CheckBox
+                android:id="@+id/cb_toefl"
                 android:layout_row="0"
                 android:layout_column="1"
                 android:layout_columnWeight="1"
-                android:text="TOEFL" />
+                android:text="TOEFL"
+                android:onClick="onCourseChecked"/>
 
             <CheckBox
+                android:id="@+id/cb_gmat"
                 android:layout_row="1"
                 android:layout_column="0"
                 android:layout_columnWeight="1"
-                android:text="GMAT" />
+                android:text="GMAT"
+                android:onClick="onCourseChecked"/>
 
             <CheckBox
+                android:id="@+id/cb_gre"
                 android:layout_row="1"
                 android:layout_column="1"
                 android:layout_columnWeight="1"
-                android:text="GRE" />
+                android:text="GRE"
+                android:onClick="onCourseChecked"/>
         </GridLayout>
 
-        <android.support.design.widget.TextInputLayout
-            android:id="@+id/textInputLayout3"
+        <EditText
+            android:id="@+id/et_country"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:inputType="text"
             android:layout_marginStart="8dp"
+            android:layout_marginTop="16dp"
+            android:layout_marginEnd="8dp"
+            android:hint="Interested Country"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.0"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/gridLayout2">
-
-            <android.support.design.widget.TextInputEditText
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:hint="Occupation"
-                android:inputType="text" />
-        </android.support.design.widget.TextInputLayout>
+            app:layout_constraintTop_toBottomOf="@+id/gridLayout2" />
 
         <android.support.design.widget.TextInputLayout
-            android:id="@+id/textInputLayout4"
+            android:id="@+id/textInputLayoutOccupation"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginStart="8dp"
             android:layout_marginEnd="8dp"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/textInputLayout3">
+            app:layout_constraintTop_toBottomOf="@id/et_country">
+
+            <android.support.design.widget.TextInputEditText
+                android:id="@+id/textInputOccupation"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="Occupation"
+                android:inputType="text" />
+        </android.support.design.widget.TextInputLayout>
+
+        <EditText
+            android:id="@+id/et_tel"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="Telphone Number"
+            android:inputType="number"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.0"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/textInputLayoutOccupation" />
+
+        <EditText
+            android:id="@+id/et_mobile_number"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="8dp"
+            android:hint="Mobile Number"
+            android:inputType="number"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.0"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/et_tel" />
+
+        <android.support.design.widget.TextInputLayout
+            android:id="@+id/textInputLayoutEmail"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="8dp"
+            android:layout_marginEnd="8dp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/et_mobile_number">
 
             <android.support.design.widget.TextInputEditText
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:hint="Email"
-                android:drawableLeft="@mipmap/ic_email"
                 android:inputType="text" />
         </android.support.design.widget.TextInputLayout>
 
@@ -181,7 +232,7 @@
             android:text="Examination Appeared"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/textInputLayout4" />
+            app:layout_constraintTop_toBottomOf="@+id/textInputLayoutEmail" />
 
 
         <GridLayout
@@ -195,62 +246,153 @@
             app:layout_constraintTop_toBottomOf="@+id/textView2">
 
             <CheckBox
+                android:id="@+id/cb_ielts2"
                 android:layout_row="0"
                 android:layout_column="0"
                 android:layout_columnWeight="1"
-                android:text="IELTS" />
+                android:text="IELTS"
+                android:onClick="onExaminationChecked"/>
 
             <CheckBox
+                android:id="@+id/cb_toefl2"
                 android:layout_row="0"
                 android:layout_column="1"
                 android:layout_columnWeight="1"
-                android:text="TOEFL" />
+                android:text="TOEFL"
+                android:onClick="onExaminationChecked"/>
 
             <CheckBox
+                android:id="@+id/cb_gmat2"
                 android:layout_row="1"
                 android:layout_column="0"
                 android:layout_columnWeight="1"
-                android:text="GMAT" />
+                android:text="GMAT"
+                android:onClick="onExaminationChecked"/>
 
             <CheckBox
+                android:id="@+id/cb_gre2"
+                android:layout_width="180dp"
+                android:layout_height="wrap_content"
                 android:layout_row="1"
                 android:layout_column="1"
                 android:layout_columnWeight="1"
-                android:text="GRE" />
+                android:text="GRE"
+                android:onClick="onExaminationChecked"/>
         </GridLayout>
 
         <LinearLayout
+            android:id="@+id/linearLayout2"
             android:layout_width="match_parent"
-            android:layout_height="1dp"
+            android:layout_height="9dp"
             android:layout_marginStart="8dp"
+            android:layout_marginTop="8dp"
             android:layout_marginEnd="8dp"
+            android:orientation="horizontal"
             android:background="@android:color/black"
             app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.0"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/gridLayout" />
 
         <TextView
+            android:id="@+id/textView6"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="8dp"
+            android:layout_marginTop="8dp"
+            android:layout_marginEnd="8dp"
+            android:layout_marginBottom="8dp"
+            android:text="Special Request"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.0"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/linearLayout2"
+            app:layout_constraintVertical_bias="0.0" />
+
+        <TextView
+            android:id="@+id/textView5"
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_marginStart="8dp"
+            android:layout_marginTop="8dp"
+            android:layout_marginEnd="8dp"
+            android:text="How did you know about kangaroo?"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/textView6" />
+
+        <RadioGroup
+            android:id="@+id/radioGroup"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginStart="8dp"
             android:layout_marginEnd="8dp"
-            android:text="Special Request"
+            android:orientation="vertical"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/gridLayout" />
+            app:layout_constraintTop_toBottomOf="@+id/textView5">
 
-        <TextView
-            android:layout_width="match_parent"
-            android:layout_height="0dp"
-            android:text="How didi you know about kangaroo?"
-            app:layout_constraintTop_toBottomOf="parent" />
-        <RadioGroup
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content">
             <RadioButton
+                android:id="@+id/rb_advertisement"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Advertisement"/>
+                android:onClick="opRadioButtonClicked"
+                android:text="Advertisement"
+                android:checked="true"/>
+
+            <RadioButton
+                android:id="@+id/rb_prev_student_friend"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:onClick="opRadioButtonClicked"
+                android:text="Friend/Previous Student" />
+
+            <EditText
+                android:id="@+id/et_prev_student_friend"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="Student or Friend Name"
+                android:inputType="text" />
+
+            <RadioButton
+                android:id="@+id/rb_organisation"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:onClick="opRadioButtonClicked"
+                android:text="Organisation Staff" />
+
+            <EditText
+                android:id="@+id/et_organisation"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="Staff Name"
+                android:inputType="text" />
+
+            <RadioButton
+                android:id="@+id/rb_others"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:onClick="opRadioButtonClicked"
+                android:text="Others (specify)" />
+
+            <EditText
+                android:id="@+id/et_others"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="Other"
+                android:inputType="text" />
         </RadioGroup>
+
+        <Button
+            android:layout_width="200dp"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="8dp"
+            android:layout_marginEnd="8dp"
+            android:gravity="center"
+            android:text="Submit Request"
+            android:onClick="sendData"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/radioGroup" />
     </android.support.constraint.ConstraintLayout>
 </ScrollView>
