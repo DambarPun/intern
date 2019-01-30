@@ -47,6 +47,8 @@ public class SpecialRequestActivity extends AppCompatActivity {
 
     private static final String TAG = "SpecialRequestActivity";
 
+    private Toast mToast;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -202,10 +204,9 @@ public class SpecialRequestActivity extends AppCompatActivity {
         jsonObject.put("exam", examinationsAppeared);
         jsonObject.put("answer", rbSpecial.getText().toString());
         jsonObject.put("remark", remark);
-        jsonObject.put("orgkey","012six");
+        jsonObject.put("orgkey", "012six");
         jsonArray = new JSONArray();
         jsonArray.put(jsonObject);
-
 
 
         Handler handler = new Handler() {
@@ -215,11 +216,20 @@ public class SpecialRequestActivity extends AppCompatActivity {
                 Log.d(TAG, "handleMessage: " + respond);
                 if (respond.equals("1")) {
                     jsonArray = new JSONArray();
-
-                    Toast.makeText(SpecialRequestActivity.this, "Data Saved", Toast.LENGTH_SHORT).show();
+                    if (mToast != null) {
+                        mToast.cancel();
+                    } else {
+                        mToast = Toast.makeText(SpecialRequestActivity.this, "Data Saved", Toast.LENGTH_SHORT);
+                        mToast.show();
+                    }
                 } else if (respond.equals("0")) {
                     jsonArray = new JSONArray();
-                    Toast.makeText(SpecialRequestActivity.this, "Failed", Toast.LENGTH_SHORT).show();
+                    if (mToast != null) {
+                        mToast.cancel();
+                    } else {
+                        mToast = Toast.makeText(SpecialRequestActivity.this, "Failed", Toast.LENGTH_SHORT);
+                        mToast.show();
+                    }
                 }
                 Log.d(TAG, "handleMessage: JSON ARRAY " + jsonArray.toString());
                 super.handleMessage(msg);
