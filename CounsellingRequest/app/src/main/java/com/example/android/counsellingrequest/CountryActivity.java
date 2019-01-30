@@ -27,7 +27,7 @@ public class CountryActivity extends AppCompatActivity {
         myToolbar.setNavigationOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-
+                startActivity(new Intent(CountryActivity.this,QualificationActivity.class));
             }
         });
 
