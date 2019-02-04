@@ -1,5 +1,9 @@
 package com.example.android.counsellingrequest;
 
+import android.annotation.SuppressLint;
+import android.content.Context;
+import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Handler;
 import android.os.Message;
 import android.support.v7.app.AppCompatActivity;
@@ -209,21 +213,24 @@ public class SpecialRequestActivity extends AppCompatActivity {
         jsonArray.put(jsonObject);
 
 
-        Handler handler = new Handler() {
+        @SuppressLint("HandlerLeak") Handler handler = new Handler() {
             @Override
             public void handleMessage(Message msg) {
                 String respond = msg.obj.toString();
                 Log.d(TAG, "handleMessage: " + respond);
                 if (respond.equals("1")) {
-                    jsonArray = new JSONArray();
+                    //jsonArray = new JSONArray();
                     if (mToast != null) {
                         mToast.cancel();
                     } else {
                         mToast = Toast.makeText(SpecialRequestActivity.this, "Data Saved", Toast.LENGTH_SHORT);
                         mToast.show();
                     }
+                    startActivity(new Intent(SpecialRequestActivity.this,BasicActivity.class));
+                    clearSharedPreferences();
+                    finish();
                 } else if (respond.equals("0")) {
-                    jsonArray = new JSONArray();
+                    //jsonArray = new JSONArray();
                     if (mToast != null) {
                         mToast.cancel();
                     } else {
@@ -240,5 +247,66 @@ public class SpecialRequestActivity extends AppCompatActivity {
 
     public void goToPreviousActivity(View view) {
         super.onBackPressed();
+    }
+
+    @Override
+    protected void onSaveInstanceState(Bundle outState) {
+        super.onSaveInstanceState(outState);
+        Log.d(TAG, "onSaveInstanceState: ");
+        SharedPreferences sharedPreferences = this.getSharedPreferences("special_request_activity",Context.MODE_PRIVATE);
+        SharedPreferences.Editor editor = sharedPreferences.edit();
+        String val = "";
+        int id = rbGroup.getCheckedRadioButtonId();
+        editor.putInt("id", id);
+        if (id == R.id.rb_prev_student_friend) {
+            val = etPrevStudentFriend.getText().toString();
+        } else if (id == R.id.rb_organisation) {
+            val = etOrganisation.getText().toString();
+        } else if (id == R.id.rb_others) {
+            val = etOthers.getText().toString();
+        }
+        editor.putString("val", val);
+        editor.apply();
+    }
+
+    @Override
+    protected void onPostResume() {
+        super.onPostResume();
+        SharedPreferences sharedPreferences = this.getSharedPreferences("special_request_activity",Context.MODE_PRIVATE);
+        if (sharedPreferences.getInt("id", 0) == R.id.rb_organisation) {
+            rbOrganisation.setChecked(true);
+            etOrganisation.setText(sharedPreferences.getString("val", ""));
+            etOrganisation.setVisibility(View.VISIBLE);
+        } else if (sharedPreferences.getInt("id", 0) == R.id.rb_advertisement) {
+            rbAdvertisement.setChecked(true);
+        } else if (sharedPreferences.getInt("id", 0) == R.id.rb_others) {
+            rbOthers.setChecked(true);
+            etOthers.setText(sharedPreferences.getString("val", ""));
+            etOthers.setVisibility(View.VISIBLE);
+        } else {
+            rbPreviousStudentFriend.setChecked(true);
+            etPrevStudentFriend.setText(sharedPreferences.getString("val", ""));
+            etPrevStudentFriend.setVisibility(View.VISIBLE);
+        }
+
+    }
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+
+
+
+    }
+    public void clearSharedPreferences(){
+        SharedPreferences sharedPreferences = this.getSharedPreferences("special_request_activity",Context.MODE_PRIVATE);
+        sharedPreferences.edit().clear().apply();
+        sharedPreferences = getSharedPreferences("basic_activity",Context.MODE_PRIVATE);
+        sharedPreferences.edit().clear().apply();
+        sharedPreferences = getSharedPreferences("contact_activity",Context.MODE_PRIVATE);
+        sharedPreferences.edit().clear().apply();
+        sharedPreferences = getSharedPreferences("date_of_birth_activity",Context.MODE_PRIVATE);
+        sharedPreferences.edit().clear().apply();
+        sharedPreferences = getSharedPreferences("qualification_activity",Context.MODE_PRIVATE);
+        sharedPreferences.edit().clear().apply();
     }
 }

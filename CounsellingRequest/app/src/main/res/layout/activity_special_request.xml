@@ -8,13 +8,14 @@
     tools:context=".SpecialRequestActivity">
 
     <android.support.v7.widget.AppCompatTextView
+        android:id="@+id/appCompatTextView2"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="36dp"
+        android:layout_marginTop="20dp"
         android:text="How did you know about Kangaroo?"
         android:textSize="22sp"
         app:layout_constraintEnd_toStartOf="@+id/guideline11"
-        app:layout_constraintHorizontal_bias="0.03"
+        app:layout_constraintHorizontal_bias="0.45"
         app:layout_constraintStart_toStartOf="@+id/guideline12"
         app:layout_constraintTop_toTopOf="@+id/guideline10" />
 
@@ -23,7 +24,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:orientation="horizontal"
-        app:layout_constraintGuide_percent=".1" />
+        app:layout_constraintGuide_percent="0.05" />
 
     <android.support.constraint.Guideline
         android:id="@+id/guideline11"
@@ -53,11 +54,12 @@
         android:layout_height="307dp"
         android:layout_marginStart="8dp"
         android:layout_marginTop="8dp"
+        android:layout_marginBottom="8dp"
         android:orientation="vertical"
-        app:layout_constraintBottom_toTopOf="@+id/guideline13"
+        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toStartOf="@+id/guideline11"
         app:layout_constraintStart_toStartOf="@+id/guideline12"
-        app:layout_constraintTop_toTopOf="@+id/guideline14">
+        app:layout_constraintTop_toBottomOf="@+id/appCompatTextView2">
 
         <RadioButton
             android:id="@+id/rb_advertisement"
@@ -74,6 +76,7 @@
             android:layout_height="wrap_content"
             android:onClick="opRadioButtonClicked"
             android:padding="8dp"
+            android:checked="false"
             android:text="Friend/Previous Student" />
 
         <EditText
@@ -90,6 +93,7 @@
             android:layout_height="wrap_content"
             android:onClick="opRadioButtonClicked"
             android:padding="8dp"
+            android:checked="false"
             android:text="Organisation Staff" />
 
         <EditText
@@ -106,6 +110,7 @@
             android:layout_height="wrap_content"
             android:onClick="opRadioButtonClicked"
             android:padding="8dp"
+            android:checked="false"
             android:text="Others (specify)" />
 
         <EditText
@@ -129,12 +134,11 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:orientation="vertical"
-        app:layout_constraintGuide_begin="0dp"
-        app:layout_constraintGuide_percent=".5" />
+        app:layout_constraintGuide_percent="0.5" />
 
     <Button
         android:id="@+id/materialButton2"
-        android:layout_width="wrap_content"
+        android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginStart="8dp"
         android:layout_marginTop="8dp"
@@ -150,7 +154,7 @@
         android:text="Back"
         android:textColor="@color/colorPrimaryDark"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toStartOf="@+id/guideline15"
+        app:layout_constraintEnd_toStartOf="@+id/materialButton"
         app:layout_constraintStart_toStartOf="@+id/guideline12"
         app:layout_constraintTop_toTopOf="@+id/guideline13" />
 
@@ -158,15 +162,15 @@
         android:id="@+id/materialButton"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:layout_marginStart="24dp"
+        android:layout_marginStart="8dp"
         android:layout_marginTop="8dp"
-        android:layout_marginEnd="24dp"
+        android:layout_marginEnd="8dp"
         android:layout_marginBottom="8dp"
         android:gravity="center"
         android:onClick="submitForm"
-        android:paddingStart="40dp"
+        android:paddingStart="50dp"
         android:paddingTop="20dp"
-        android:paddingEnd="40dp"
+        android:paddingEnd="50dp"
         android:paddingBottom="20dp"
         android:text="Submit"
         android:textColor="@color/colorOnPrimaryDark"

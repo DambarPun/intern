@@ -1,7 +1,9 @@
 package com.example.android.counsellingrequest;
 
 import android.app.DatePickerDialog;
+import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
 import android.support.v7.app.AppCompatActivity;
@@ -19,8 +21,8 @@ public class DateOfBirthActivity extends AppCompatActivity {
     private AppCompatTextView mAppCompatTextViewError;
     private Calendar now;
 
+
     private static final String TAG = "DateOfBirthActivity";
-    private Toast mToast;
 
     //Set values of date
     private int mYear;
@@ -39,8 +41,8 @@ public class DateOfBirthActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_date_of_birth);
-        mAppCompatTextViewDOB =  findViewById(R.id.appCompatTextViewDOB);
-        mAppCompatTextViewError =  findViewById(R.id.appCompatTextViewError);
+        mAppCompatTextViewDOB = findViewById(R.id.appCompatTextViewDOB);
+        mAppCompatTextViewError = findViewById(R.id.appCompatTextViewError);
         mAppCompatTextViewError.setVisibility(View.GONE);
 
         Bundle bundle = getIntent().getExtras();
@@ -115,17 +117,11 @@ public class DateOfBirthActivity extends AppCompatActivity {
     }
 
     private boolean isDOBValid() {
-
         Calendar now = Calendar.getInstance();
-        Log.d(TAG, "isDOBValid: current date: "+now.get(Calendar.YEAR)+" "+now.get(Calendar.MONTH)+" "+now.get(Calendar.DAY_OF_MONTH));
-        Log.d(TAG, "isDOBValid: set date: "+mYear+" "+mMonth+" "+mDayOfMonth);
-        Toast.makeText(this, "Current date: "+now.get(Calendar.YEAR)+" "+now.get(Calendar.MONTH)+" "+now.get(Calendar.DAY_OF_MONTH)+"\n"+"set date: "+mYear+" "+mMonth+" "+mDayOfMonth, Toast.LENGTH_LONG).show();
-
         if (now.get(Calendar.YEAR) <= mYear) //checking if the set year is greater than current year
         {
             mAppCompatTextViewError.setText("Invalid Date of Birth");
             mAppCompatTextViewError.setVisibility(View.VISIBLE);
-
         } else if ((now.get(Calendar.YEAR) - mYear) < 10)//checking if there is at least 10 year gap
         {
             mAppCompatTextViewError.setText("You are too young to register");
@@ -135,5 +131,32 @@ public class DateOfBirthActivity extends AppCompatActivity {
             return true;
         }
         return false;
+    }
+
+    @Override
+    protected void onSaveInstanceState(Bundle outState) {
+        super.onSaveInstanceState(outState);
+        Log.d(TAG, "onSaveInstanceState: ");
+        String dob = mAppCompatTextViewDOB.getText().toString();
+        SharedPreferences sharedPreferences = this.getSharedPreferences("date_of_birth_activity",Context.MODE_PRIVATE);
+        SharedPreferences.Editor editor = sharedPreferences.edit();
+        editor.putInt("month", mMonth);
+        editor.putInt("day", mDayOfMonth);
+        editor.putInt("year", mYear);
+        editor.apply();
+    }
+
+    @Override
+    protected void onPostResume() {
+        super.onPostResume();
+        SharedPreferences sharedPreferences = this.getSharedPreferences("date_of_birth_activity",Context.MODE_PRIVATE);
+        int year = sharedPreferences.getInt("year",now.get(Calendar.YEAR));
+        int month = sharedPreferences.getInt("month",now.get(Calendar.MONTH));
+        int day = sharedPreferences.getInt("day",now.get(Calendar.DAY_OF_MONTH));
+        setCalendar(year,month,day);
+    }
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
     }
 }

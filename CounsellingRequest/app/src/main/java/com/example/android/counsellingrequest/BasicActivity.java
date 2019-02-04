@@ -1,6 +1,9 @@
 package com.example.android.counsellingrequest;
 
+import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
+import android.preference.Preference;
 import android.support.design.widget.TextInputLayout;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -11,6 +14,8 @@ public class BasicActivity extends AppCompatActivity {
     private TextInputLayout mTextInputLayoutAddress;
     private TextInputLayout mTextInputLayoutName;
     private TextInputLayout mTextInputLayoutOccupation;
+    private SharedPreferences sharedPreferences;
+    private SharedPreferences.Editor editor;
 
     private static final String TAG = "BasicActivity";
 
@@ -94,25 +99,30 @@ public class BasicActivity extends AppCompatActivity {
 
     @Override
     protected void onSaveInstanceState(Bundle outState) {
-        Log.d(TAG, "onSaveInstanceState: ");
         super.onSaveInstanceState(outState);
+        Log.d(TAG, "onSaveInstanceState: ");
         String name = mTextInputLayoutName.getEditText().getText().toString();
         String address = mTextInputLayoutAddress.getEditText().getText().toString();
         String occupation = mTextInputLayoutOccupation.getEditText().getText().toString();
-        outState.putString("name",name);
-        outState.putString("name",address);
-        outState.putString("name",occupation);
+        sharedPreferences = this.getSharedPreferences("basic_activity",Context.MODE_PRIVATE);
+        editor = sharedPreferences.edit();
+        editor.putString("name", name);
+        editor.putString("address", address);
+        editor.putString("occupation", occupation);
+        editor.apply();
     }
 
     @Override
     protected void onPostResume() {
         super.onPostResume();
-        Log.d(TAG, "onPostResume: ");
-        Bundle bundle = getIntent().getExtras();
-        if (bundle != null) {
-            mTextInputLayoutName.getEditText().setText(bundle.getString("name"));
-            mTextInputLayoutAddress.getEditText().setText(bundle.getString("address"));
-            mTextInputLayoutOccupation.getEditText().setText(bundle.getString("occupation"));
-        }
+        sharedPreferences = getSharedPreferences("basic_activity",Context.MODE_PRIVATE);
+        mTextInputLayoutName.getEditText().setText(sharedPreferences.getString("name", ""));
+        mTextInputLayoutAddress.getEditText().setText(sharedPreferences.getString("address", ""));
+        mTextInputLayoutOccupation.getEditText().setText(sharedPreferences.getString("occupation", null));
+    }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
     }
 }

@@ -1,6 +1,8 @@
 package com.example.android.counsellingrequest;
 
+import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.support.design.widget.TextInputLayout;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -37,12 +39,6 @@ public class ContactActivity extends AppCompatActivity {
             name = bundle.getString("name");
             address = bundle.getString("address");
             occupation = bundle.getString("occupation");
-
-            Log.d(TAG, "onCreate: name: " + name);
-            Log.d(TAG, "onCreate: Bundle data received");
-            Log.d(TAG, "onCreate: name: " + name);
-            Log.d(TAG, "onCreate: address: " + address);
-            Log.d(TAG, "onCreate: occupation: " + occupation);
         }
 
     }
@@ -133,34 +129,25 @@ public class ContactActivity extends AppCompatActivity {
         String email = mTextInputLayoutEmail.getEditText().getText().toString();
         String tel = mTextInputLayoutTel.getEditText().getText().toString();
         String mobile = mTextInputLayoutMobile.getEditText().getText().toString();
-        outState.putString("email", email);
-        outState.putString("tel", tel);
-        outState.putString("mobile", mobile);
-
-        Log.d(TAG, "onPostResume: Email: "+email);
-        Log.d(TAG, "onPostResume: Tel: "+tel);
-        Log.d(TAG, "onPostResume: Mobile: "+mobile);
-
+        SharedPreferences sharedPreferences = this.getSharedPreferences("contact_activity",Context.MODE_PRIVATE);
+        SharedPreferences.Editor editor = sharedPreferences.edit();
+        editor.putString("email", email);
+        editor.putString("tel", tel);
+        editor.putString("mobile", mobile);
+        editor.apply();
     }
 
     @Override
     protected void onPostResume() {
         super.onPostResume();
-        Log.d(TAG, "onPostResume: ");
-        Bundle bundle = getIntent().getExtras();
-        if (bundle != null) {
+        SharedPreferences sharedPreferences = this.getSharedPreferences("contact_activity",Context.MODE_PRIVATE);
+        mTextInputLayoutEmail.getEditText().setText(sharedPreferences.getString("email", ""));
+        mTextInputLayoutTel.getEditText().setText(sharedPreferences.getString("tel", ""));
+        mTextInputLayoutMobile.getEditText().setText(sharedPreferences.getString("mobile", ""));
+    }
 
-            String email = bundle.getString("email");
-            String tel = bundle.getString("tel");
-            String mobile = bundle.getString("mobile");
-
-            Log.d(TAG, "onPostResume: Bundle not empty");
-            Log.d(TAG, "onPostResume: Email: "+email);
-            Log.d(TAG, "onPostResume: Tel: "+tel);
-            Log.d(TAG, "onPostResume: Mobile: "+mobile);
-            mTextInputLayoutEmail.getEditText().setText(bundle.getString("email"));
-            mTextInputLayoutTel.getEditText().setText(bundle.getString("tel"));
-            mTextInputLayoutMobile.getEditText().setText(bundle.getString("mobile"));
-        }
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
     }
 }
