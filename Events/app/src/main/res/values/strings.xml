@@ -1,0 +1,9 @@
+<resources>
+    <string name="app_name">Events</string>
+    <string name="org_key">012six</string>
+    <string name="org_img_path">http://192.168.1.80:81/counsel/images/</string>
+    <string name="venue">Venue</string>
+    <string name="event_duration">Event Duration</string>
+    <string name="organizer">Organizer</string>
+    <string name="phone">Phone</string>
+</resources>
