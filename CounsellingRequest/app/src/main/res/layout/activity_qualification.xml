@@ -30,7 +30,7 @@
                 android:layout_height="wrap_content"
                 android:layout_weight=".4"
                 android:text="Qualification"
-                android:textStyle="bold" />
+                android:textStyle="bold" />2
 
             <android.support.v7.widget.AppCompatSpinner
                 android:id="@+id/appCompatSpinner"
