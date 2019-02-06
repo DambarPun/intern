@@ -54,9 +54,9 @@ public class EventActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 if (mFloatingActionButton.getDrawable() == getDrawable(R.drawable.ic_action_notification_on)) {
-                    mFloatingActionButton.setBackgroundDrawable(getDrawable(R.drawable.ic_action_notification_off));
+                    mFloatingActionButton.setImageResource(R.drawable.ic_action_notification_off);
                 } else {
-                    mFloatingActionButton.setBackgroundDrawable(getDrawable(R.drawable.ic_action_notification_on));
+                    mFloatingActionButton.setImageResource(R.drawable.ic_action_notification_on);
                 }
             }
         });
