@@ -33,7 +33,7 @@ public class EventAdapter extends RecyclerView.Adapter<EventAdapter.ViewHolder> 
         String datetime  = mEvents.get(i).getEvent_date()+" "+mEvents.get(i).getEvent_time();
         viewHolder.mTvTitle.setText(mEvents.get(i).getEvent_title());
         viewHolder.mTvDateTime.setText(datetime);
-        viewHolder.mTvDays.setText("Coming Up");
+        viewHolder.mTvDays.setText(mEvents.get(i).formattedDate());
 
         viewHolder.mCvLayout.setOnClickListener(new View.OnClickListener() {
             @Override

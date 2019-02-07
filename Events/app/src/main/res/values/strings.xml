@@ -6,4 +6,6 @@
     <string name="event_duration">Event Duration</string>
     <string name="organizer">Organizer</string>
     <string name="phone">Phone</string>
+    <string name="channel_name">event_notification_channel</string>
+    <string name="channel_description">Events notification</string>
 </resources>

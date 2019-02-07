@@ -3,6 +3,8 @@ package com.example.android.tictactoe;
 import android.content.Context;
 import android.content.SharedPreferences;
 import android.graphics.Typeface;
+import android.support.design.widget.CoordinatorLayout;
+import android.support.design.widget.Snackbar;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
@@ -18,9 +20,14 @@ public class GameConfigurationActivity extends AppCompatActivity {
     private TextView mTvHard;
     private TextView mTvNought;
     private TextView mTvCross;
+    private CoordinatorLayout mCoordinatorLayout;
+
+    private Snackbar mEasySnackbar;
+    private Snackbar mMediumSnackbar;
 
     public static final String DIFFICULT_LEVEL = "difficultLevel";
     public static final String HUMAN = "human";
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -33,8 +40,8 @@ public class GameConfigurationActivity extends AppCompatActivity {
     private void restoreSharedPreferences() {
         Log.d(TAG, "restoreSharedPreferences: ");
         SharedPreferences sharedPreferences = this.getSharedPreferences(getString(R.string.game_configuration_activity_shared_preferences), Context.MODE_PRIVATE);
-        setDifficultLevel(sharedPreferences.getString(DIFFICULT_LEVEL, "Easy"));
-        setHuman(sharedPreferences.getString(HUMAN,"X"));
+        setDifficultLevel(sharedPreferences.getString(DIFFICULT_LEVEL, "Hard"));
+        setHuman(sharedPreferences.getString(HUMAN, "X"));
         Log.d(TAG, "restoreSharedPreferences: " + sharedPreferences.getString(DIFFICULT_LEVEL, "Easy"));
 
 
@@ -74,10 +81,24 @@ public class GameConfigurationActivity extends AppCompatActivity {
         mTvHard = (TextView) findViewById(R.id.tv_hard);
         mTvCross = (TextView) findViewById(R.id.tv_cross);
         mTvNought = (TextView) findViewById(R.id.tv_nought);
+        mCoordinatorLayout = (CoordinatorLayout) findViewById(R.id.coordinatorLayout);
+
+        mEasySnackbar = null;
     }
 
     public void setDifficultLevelToEasy(View view) {
-        setDifficultLevelToEasy();
+        mEasySnackbar = Snackbar.make(mCoordinatorLayout, "Easy difficulty feature is not available", Snackbar.LENGTH_SHORT)
+                .setAction("Dismiss", new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        mEasySnackbar.dismiss();
+                    }
+                });
+        mEasySnackbar.show();
+
+
+        //remove the comment below when easy difficulty level feature is added
+        //setDifficultLevelToEasy();
     }
 
     private void setDifficultLevelToEasy() {
@@ -97,7 +118,18 @@ public class GameConfigurationActivity extends AppCompatActivity {
     }
 
     public void setDifficultLevelToMedium(View view) {
-        setDifficultLevelToMedium();
+        mMediumSnackbar = Snackbar.make(mCoordinatorLayout, "Medium difficulty feature is not available", Snackbar.LENGTH_SHORT)
+                .setAction("Dismiss", new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        mMediumSnackbar.dismiss();
+                    }
+                });
+        mMediumSnackbar.show();
+
+
+        //remove the comment below when medium difficulty level feature is added
+        //setDifficultLevelToMedium();
     }
 
     private void setDifficultLevelToMedium() {

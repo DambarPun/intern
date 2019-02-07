@@ -53,7 +53,7 @@ public class EventActivity extends AppCompatActivity {
         mFloatingActionButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if (mFloatingActionButton.getDrawable() == getDrawable(R.drawable.ic_action_notification_on)) {
+                if (mFloatingActionButton.getDrawable().getConstantState() == getDrawable(R.drawable.ic_action_notification_on).getConstantState()) {
                     mFloatingActionButton.setImageResource(R.drawable.ic_action_notification_off);
                 } else {
                     mFloatingActionButton.setImageResource(R.drawable.ic_action_notification_on);
