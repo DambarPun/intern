@@ -7,7 +7,7 @@ import android.util.Log;
 
 public class EventSchedularDbHelper extends SQLiteOpenHelper {
     private static final String DATABASE_NAME = "EventScheldular";
-    private static final int DATABASE_VERSION = 2;
+    private static final int DATABASE_VERSION = 13;
     private static final String TAG = "EventSchedularDbHelper";
     private static final String SQL_CREATE_ENTRIES = "CREATE TABLE event_reminder (event_id INTEGER,event_title TEXT(50), event_date TEXT(10),event_time TEXT(10), event_duration TEXT(10), event_venue TEXT(50),event_organizer TEXT(30), event_contact TEXT(15),event_type TYPR(5), event_description TEXT(255),event_photo TEXT(100))";
     private static final String SQL_DELETE_ENTRIES = "DROP TABLE IF EXISTS event_reminder";

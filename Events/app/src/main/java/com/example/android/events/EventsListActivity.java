@@ -87,7 +87,7 @@ public class EventsListActivity extends AppCompatActivity {
                 if (cursor.moveToFirst()) {
                     do {
                         ids.add(cursor.getInt(0));
-                        Log.d(TAG, "doInBackground: saved id" + cursor.getInt(0));
+                        Log.d(TAG, "doInBackground: saving event id: " + cursor.getInt(0));
                     } while (cursor.moveToNext());
                 }
                 cursor.close();
@@ -100,9 +100,7 @@ public class EventsListActivity extends AppCompatActivity {
                 String json = readUrl("http://192.168.1.80:81/counsel/eventrequest.php?event_request=[{\"orgkey\":\"" + getString(R.string.org_key) + "\"}]");
                 jsonArray = new JSONArray(json);
 
-                openWritableDatabaseConnection();
                 if (jsonArray != null) {
-                    Log.d(TAG, "doInBackground: Json not empty");
                     for (int i = 0; i < jsonArray.length(); i++) {
                         jsonObject = jsonArray.getJSONObject(i);
                         int event_id = Integer.valueOf(String.valueOf(jsonObject.get("event_id")));
@@ -116,8 +114,18 @@ public class EventsListActivity extends AppCompatActivity {
                         String event_type = jsonObject.getString("event_type");
                         String event_description = jsonObject.getString("event_description");
                         String event_photo = jsonObject.getString("event_photo");
-                        Calendar cal  = new GregorianCalendar(Integer.parseInt(event_date.substring(0,4)),(Integer.parseInt(event_date.substring(5,7))-1),Integer.parseInt(event_date.substring(8,10)),Integer.parseInt(event_time.substring(0,2)),Integer.parseInt(event_time.substring(3,5)));
-                        createAlarm(cal,event_description);
+                        Log.d(TAG, "doInBackground: Time: "+event_time);
+                        Log.d(TAG, "doInBackground: Formatted time: "+ Integer.parseInt(event_time.substring(0, 2))+":"+Integer.parseInt(event_time.substring(3, 5)));
+                        Calendar cal = new GregorianCalendar(Integer.parseInt(event_date.substring(0, 4)), (Integer.parseInt(event_date.substring(5, 7)) - 1), Integer.parseInt(event_date.substring(8, 10)), Integer.parseInt(event_time.substring(0, 2)), Integer.parseInt(event_time.substring(3, 5)));
+                        Log.d(TAG, "doInBackground: Gregorian calendar: YEAR: "+cal.get(Calendar.YEAR));
+                        Log.d(TAG, "doInBackground: Gregorian calendar: MONTH: "+cal.get(Calendar.MONTH));
+                        Log.d(TAG, "doInBackground: Gregorian calendar: DAY_OF_MONTH: "+cal.get(Calendar.DAY_OF_MONTH));
+                        Log.d(TAG, "doInBackground: Gregorian calendar: HOUR_OF_DAY: "+cal.get(Calendar.HOUR_OF_DAY));
+                        Log.d(TAG, "doInBackground: Gregorian calendar: MINUTE: "+cal.get(Calendar.MINUTE));
+                        Log.d(TAG, "doInBackground: Gregorian calendar: SECOND: "+cal.get(Calendar.SECOND));
+
+                        createAlarm(cal, event_description, event_id);
+                        openWritableDatabaseConnection();
 
                         boolean unique = true;
                         for (int i1 = 0; i1 < ids.size(); i++) {
@@ -127,13 +135,13 @@ public class EventsListActivity extends AppCompatActivity {
                             }
                         }
                         if (unique) {
-                            String insertQuery = "INSERT into event_reminder VALUES('" + event_id + "','" + event_title + "','" + event_date + "','" + event_time + "','" + event_duration + "','" + event_venue + "','" + event_organizer + "','" + event_contact + "','" + event_type + "','" + event_description + "','" + getString(R.string.org_img_path)+event_photo + "')";
+                            String insertQuery = "INSERT into event_reminder VALUES('" + event_id + "','" + event_title + "','" + event_date + "','" + event_time + "','" + event_duration + "','" + event_venue + "','" + event_organizer + "','" + event_contact + "','" + event_type + "','" + event_description + "','" + getString(R.string.org_img_path) + event_photo + "')";
                             Log.d(TAG, "doInBackground: insert query: " + insertQuery);
                             sqLiteDatabase.execSQL(insertQuery);
 
                         } else {
                             //old event
-                            String updateQuery = "UPDATE event_reminder SET event_title = '" + event_title + "', event_date = '" + event_date + "', event_time = '" + event_time + "', event_duration = '" + event_duration + "', event_venue = '" + event_venue + "', event_organizer = '" + event_organizer + "', event_contact = '" + event_contact + "', event_type = '" + event_type + "', event_description = '" + event_description + "', event_photo = '" + getString(R.string.org_img_path)+event_photo + "'";
+                            String updateQuery = "UPDATE event_reminder SET event_title = '" + event_title + "', event_date = '" + event_date + "', event_time = '" + event_time + "', event_duration = '" + event_duration + "', event_venue = '" + event_venue + "', event_organizer = '" + event_organizer + "', event_contact = '" + event_contact + "', event_type = '" + event_type + "', event_description = '" + event_description + "', event_photo = '" + getString(R.string.org_img_path) + event_photo + "'";
                             Log.d(TAG, "doInBackground: update query: " + updateQuery);
                             sqLiteDatabase.execSQL(updateQuery);
                         }
@@ -145,8 +153,7 @@ public class EventsListActivity extends AppCompatActivity {
                     Log.d(TAG, "doInBackground: No events to show");
                 }
 
-            } catch (
-                    Exception e) {
+            } catch (Exception e) {
                 e.printStackTrace();
                 Log.e(TAG, "doInBackground: ", e);
             }
@@ -198,44 +205,18 @@ public class EventsListActivity extends AppCompatActivity {
         EventSchedularDbHelper eventSchedularDbHelper = new EventSchedularDbHelper(this);
         sqLiteDatabase = eventSchedularDbHelper.getWritableDatabase();
     }
-    private void createAlarm(Calendar cal, String task) {
-        Log.d(TAG, "createAlarm: Setting alarm for notification");
-        AlarmManager alarmManager = (AlarmManager) getSystemService(Context.ALARM_SERVICE);
-        Intent intent = new Intent(this, AlertReceiver.class);
-        intent.putExtra("task", task);
+
+    private void createAlarm(Calendar cal, String description, int requestCode) {
         try {
-            openReadableDatabaseConnection();
-            String mSelectQuery = "SELECT id FROM reminder";
-            //getting the last value
-            Integer i = 0;
-            Cursor cursor = sqLiteDatabase.rawQuery(mSelectQuery, null);
-            if (cursor.moveToFirst()) {
-                do {
-                    i = cursor.getInt(0);
-                } while (cursor.moveToNext());
-            }
-            cursor.close();
-            Log.d(TAG, "createAlarm: Value of i: " + i);
-
-            openWritableDatabaseConnection();
-            String mInsertQuery = "INSERT INTO permission VALUES (null, " + i + ")";
-            sqLiteDatabase.execSQL(mInsertQuery);
-
-            Integer requestCode = 0;
-            openReadableDatabaseConnection();
-            cursor = sqLiteDatabase.rawQuery("SELECT permission_id FROM permission", null);
-            if (cursor.moveToFirst()) {
-                do {
-                    requestCode = cursor.getInt(0);
-                } while (cursor.moveToNext());
-                PendingIntent pendingIntent = PendingIntent.getBroadcast(this, requestCode, intent, 0);
-                alarmManager.setExact(AlarmManager.RTC_WAKEUP, cal.getTimeInMillis(), pendingIntent);
-            }
-
+            Log.d(TAG, "createAlarm: Setting alarm for notification");
+            AlarmManager alarmManager = (AlarmManager) getSystemService(Context.ALARM_SERVICE);
+            Intent intent = new Intent(this, AlertReceiver.class);
+            intent.putExtra("event_id",requestCode);
+            intent.putExtra("description", description);
+            PendingIntent pendingIntent = PendingIntent.getBroadcast(this, requestCode, intent, 0);
+            alarmManager.setExact(AlarmManager.RTC_WAKEUP, cal.getTimeInMillis(), pendingIntent);
         } catch (Exception e) {
             Log.e(TAG, "createAlarm: Exception Caught", e);
-        } finally {
-            closeDatabaseConnection();
         }
     }
 

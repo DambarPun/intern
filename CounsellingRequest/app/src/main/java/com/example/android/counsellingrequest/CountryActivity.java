@@ -18,7 +18,7 @@ public class CountryActivity extends AppCompatActivity {
     private String address;
     private String occupation;
     private String email;
-    private String tel;
+    private String tels;
     private String mobile;
     private String dob;
     private String country;

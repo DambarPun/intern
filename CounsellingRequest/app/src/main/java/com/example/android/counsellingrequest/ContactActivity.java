@@ -129,7 +129,7 @@ public class ContactActivity extends AppCompatActivity {
         String email = mTextInputLayoutEmail.getEditText().getText().toString();
         String tel = mTextInputLayoutTel.getEditText().getText().toString();
         String mobile = mTextInputLayoutMobile.getEditText().getText().toString();
-        SharedPreferences sharedPreferences = this.getSharedPreferences("contact_activity",Context.MODE_PRIVATE);
+        SharedPreferences sharedPreferences = this.getSharedPreferences("contact_activity", Context.MODE_PRIVATE);
         SharedPreferences.Editor editor = sharedPreferences.edit();
         editor.putString("email", email);
         editor.putString("tel", tel);
@@ -140,7 +140,7 @@ public class ContactActivity extends AppCompatActivity {
     @Override
     protected void onPostResume() {
         super.onPostResume();
-        SharedPreferences sharedPreferences = this.getSharedPreferences("contact_activity",Context.MODE_PRIVATE);
+        SharedPreferences sharedPreferences = this.getSharedPreferences("contact_activity", Context.MODE_PRIVATE);
         mTextInputLayoutEmail.getEditText().setText(sharedPreferences.getString("email", ""));
         mTextInputLayoutTel.getEditText().setText(sharedPreferences.getString("tel", ""));
         mTextInputLayoutMobile.getEditText().setText(sharedPreferences.getString("mobile", ""));

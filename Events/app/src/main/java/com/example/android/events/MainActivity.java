@@ -11,7 +11,7 @@ import android.view.View;
 
 public class MainActivity extends AppCompatActivity {
 
-    private static final String CHANNEL_ID = "0011212" ;
+    private static final String CHANNEL_ID = "0x0000121";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -20,11 +20,12 @@ public class MainActivity extends AppCompatActivity {
         createNotificationChannel();
 
     }
-    public void createNotificationChannel(){
+
+    public void createNotificationChannel() {
         //Create the NotificationChannel but only on API 26+ because NotificationChannel
         //class is new and not in the support library
-        if(Build.VERSION.SDK_INT>=Build.VERSION_CODES.O){
-            CharSequence name  = getString(R.string.channel_name);
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+            CharSequence name = getString(R.string.channel_name);
             String description = getString(R.string.channel_description);
             int importance = NotificationManager.IMPORTANCE_DEFAULT;
 
